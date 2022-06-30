@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     self.window = UIWindow(frame: UIScreen.main.bounds)
    
-    let mainView = MovieViewController(nibName: nil, bundle: nil) //ViewController = Name of your controller
+    let mainView = MovieViewController(nibName: nil, bundle: nil) 
     let nav1 = UINavigationController(rootViewController: mainView)
    
     self.window!.rootViewController = nav1

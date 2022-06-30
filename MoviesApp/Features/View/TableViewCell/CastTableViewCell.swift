@@ -62,7 +62,7 @@ class CastTableViewCell: UITableViewCell {
   func saveModel(model: CastResult) {
     nameLabel.text = model.originalName
     characterLabel.text = model.character
-    personImageView.af.setImage(withURL: URL(string: model.bigPosterImageUrl()!)! ,placeholderImage: UIImage(named: "default-profile"), progressQueue: .main, imageTransition: .crossDissolve(1.0))
+    personImageView.af.setImage(withURL: URL(string: model.bigPosterImageUrl()!)! ,placeholderImage: UIImage(named: "default-profile"), progressQueue: .main, imageTransition: .crossDissolve(0.5))
   }
   
 }

@@ -121,25 +121,25 @@ final class MovieDetailsViewController: UIViewController {
     title = movie.title
     id = movie.id
     navigationItem.setRightBarButton(UIBarButtonItem(customView: indicator), animated: true)
-    indicator.color = .orange
-    view.backgroundColor = .white
+    indicator.color = .systemOrange
+    view.backgroundColor = .systemBackground
     posterImageView.translatesAutoresizingMaskIntoConstraints = false
     scrollView.translatesAutoresizingMaskIntoConstraints = true
     ratingLabel.translatesAutoresizingMaskIntoConstraints = false
     summaryLabel.translatesAutoresizingMaskIntoConstraints = false
     summaryTextLabel.translatesAutoresizingMaskIntoConstraints = false
     contentView.translatesAutoresizingMaskIntoConstraints = false
-    posterImageView.af.setImage(withURL: URL(string: movie.bigPosterImageUrl()!)! ,placeholderImage: UIImage(named: "default"), progressQueue: .main, imageTransition: .flipFromBottom(0.5))
+    posterImageView.af.setImage(withURL: URL(string: movie.bigPosterImageUrl()!)! ,placeholderImage: UIImage(named: "default"), progressQueue: .main, imageTransition: .crossDissolve(0.5))
     posterImageView.clipsToBounds = true
     posterImageView.contentMode = .scaleAspectFill
     posterImageView.sizeToFit()
     ratingLabel.sizeToFit()
     ratingLabel.text = "⭐️ \(String(movie.voteAverage))"
-    ratingLabel.textColor = .orange
+    ratingLabel.textColor = .systemOrange
     ratingLabel.textAlignment = .center
     ratingLabel.shadowColor = .black
     summaryLabel.font = .systemFont(ofSize: 23, weight: .regular)
-    summaryLabel.textColor = .orange
+    summaryLabel.textColor = .systemOrange
     summaryLabel.attributedText = NSAttributedString(string: "Overview", attributes:
                                                       [.underlineStyle: NSUnderlineStyle.single.rawValue])
     summaryTextLabel.text = movie.overview
@@ -148,9 +148,9 @@ final class MovieDetailsViewController: UIViewController {
     summaryTextLabel.lineBreakMode = .byTruncatingTail
     summaryLabel.sizeToFit()
     summaryTextLabel.sizeToFit()
-    trailerLabel.textColor = .orange
+    trailerLabel.textColor = .systemOrange
     trailerLabel.font = .systemFont(ofSize: 23, weight: .regular)
-    trailerLabel.attributedText = NSAttributedString(string: "Videos", attributes:
+    trailerLabel.attributedText = NSAttributedString(string: "Watch On YouTube🍿", attributes:
                                                       [.underlineStyle: NSUnderlineStyle.single.rawValue])
     castButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
     castButton.isUserInteractionEnabled = true
@@ -158,8 +158,8 @@ final class MovieDetailsViewController: UIViewController {
     castButton.layer.cornerRadius = 12
     castButton.setTitleColor(.orange, for: .normal)
     castButton.layer.borderWidth = 1.5
-    castButton.layer.borderColor = UIColor.orange.cgColor
-    castButton.backgroundColor = .white
+    castButton.layer.borderColor = UIColor.systemOrange.cgColor
+    castButton.backgroundColor = .systemBackground
     castButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
     castButton.layer.shadowOffset = CGSize(width: 3.0, height: 4.0)
     castButton.layer.shadowOpacity = 1.0

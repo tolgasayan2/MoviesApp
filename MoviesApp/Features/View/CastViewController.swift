@@ -44,10 +44,10 @@ final class CastViewController: UIViewController {
  func configure() {
     title = "Actors"
    navigationItem.setRightBarButton(UIBarButtonItem(customView: indicator), animated: true)
-   indicator.color = .orange
+   indicator.color = .systemOrange
    tableView.rowHeight = 100
-   view.backgroundColor = .white
-   tableView.backgroundColor = .white
+   view.backgroundColor = .systemBackground
+   tableView.backgroundColor = .systemBackground
    tableView.register(CastTableViewCell.self, forCellReuseIdentifier: CastTableViewCell.Identifier.custom.rawValue)
    tableView.delegate = self
    tableView.dataSource = self

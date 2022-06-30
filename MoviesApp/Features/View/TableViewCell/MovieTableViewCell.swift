@@ -62,7 +62,7 @@ class MovieTableViewCell: UITableViewCell {
   func saveModel(model: Result) {
     titleLabel.text = model.title
     releaseDateLabel.text = model.relaseYear()
-    posterImageView.af.setImage(withURL: URL(string: model.posterImageUrl()!)! ,placeholderImage: UIImage(named: "default"), progressQueue: .main, imageTransition: .flipFromBottom(0.5))
+    posterImageView.af.setImage(withURL: URL(string: model.posterImageUrl()!)! ,placeholderImage: UIImage(named: "default"), progressQueue: .main, imageTransition: .crossDissolve(0.5))
   }
 }
 

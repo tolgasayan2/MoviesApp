@@ -46,7 +46,7 @@ class MovieViewModel: IMovieViewModel {
     changeLoading()
     movieService.fetchPopularMovies(page: page, pagination: true) { [weak self] response in
       self?.changeLoading()
-      self?.movies = response?.removingDuplicates() ?? []
+      self?.movies = response ?? []
       self?.movieOutput?.saveDatas(values: self?.movies ?? [])
     }
   }

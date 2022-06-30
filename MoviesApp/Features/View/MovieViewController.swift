@@ -44,25 +44,25 @@ final class MovieViewController: UIViewController {
   
   func configure() {
     title = "Popular Movies"
-    navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange]
+    navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemOrange]
     navigationItem.setRightBarButton(UIBarButtonItem(customView: indicator), animated: true)
     navigationController?.navigationBar.tintColor = .placeholderText
     searchBar.searchBarStyle = UISearchBar.Style.default
     searchBar.placeholder = " Search..."
     searchBar.sizeToFit()
     searchBar.isTranslucent = false
-    searchBar.backgroundImage = UIImage()
-    UISearchBar.appearance().tintColor = UIColor.orange
+    searchBar.backgroundColor = .systemBackground
+    UISearchBar.appearance().tintColor = UIColor.systemOrange
     searchBar.delegate = self
     tableView.tableHeaderView = searchBar
     navigationItem.backButtonTitle = ""
     tableView.rowHeight = 100
-    view.backgroundColor = .white
-    tableView.backgroundColor = .white
+    view.backgroundColor = UIColor.systemBackground
+    tableView.backgroundColor = .systemBackground
     tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.Identifier.custom.rawValue)
     tableView.delegate = self
     tableView.dataSource = self
-    indicator.color = .orange
+    indicator.color = .systemOrange
     indicator.startAnimating()
   }
 }
@@ -139,20 +139,21 @@ extension MovieViewController: UISearchBarDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if !isFiltered {
       let position = scrollView.contentOffset.y
-      if position > (tableView.contentSize.height - scrollView.frame.size.height) {
+      if position > (tableView.contentSize.height - 50 - scrollView.frame.size.height) {
+        guard viewModel.movieService.isPaginating else {
+          return
+        }
         changeLoading(isLoad: true)
         viewModel.movieService.fetchPopularMovies(page: page + 1, pagination: true) { [weak self] result in
-          self?.page += 1
+          
           DispatchQueue.main.async {
-            self?.results.append(contentsOf: result?.removingDuplicates() ?? [])
+
+            self?.results.append(contentsOf: result ?? [])
             self?.tableView.reloadData()
             self?.changeLoading(isLoad: false)
           }
         }
-        guard !viewModel.movieService.isPaginating else {
-          return
-        }
-       
+        page += 1
       }
     }
   }
