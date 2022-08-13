@@ -14,7 +14,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     
-    guard let _ = (scene as? UIWindowScene) else { return }
+    guard let scene = (scene as? UIWindowScene) else { return }
+    let tabBar = UITabBarController()
+    tabBar.modalPresentationStyle = .fullScreen
+    window = UIWindow(windowScene: scene)
+    let firstVC = UINavigationController(rootViewController: MovieViewController())
+    let secondVC = UINavigationController(rootViewController: SearchViewController())
+    secondVC.title = "Search"
+    tabBar.setViewControllers([firstVC, secondVC], animated: false)
+    guard let items = tabBar.tabBar.items else {
+      return
+    }
+    let images = ["film","magnifyingglass", "star.circle.fill"]
+    for i in 0..<items.count {
+      items[i].image = UIImage(systemName: images[i])
+    }
+    window?.rootViewController = tabBar
+    window?.makeKeyAndVisible()
   }
 
   func sceneDidDisconnect(_ scene: UIScene) {

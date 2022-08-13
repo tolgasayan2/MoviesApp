@@ -47,11 +47,9 @@ final class MovieViewController: UIViewController {
     navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemOrange]
     navigationItem.setRightBarButton(UIBarButtonItem(customView: indicator), animated: true)
     navigationController?.navigationBar.tintColor = .placeholderText
-    searchBar.searchBarStyle = UISearchBar.Style.default
+    navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemOrange]
+    searchBar.searchBarStyle = UISearchBar.Style.minimal
     searchBar.placeholder = " Search..."
-    searchBar.sizeToFit()
-    searchBar.isTranslucent = false
-    searchBar.backgroundColor = .systemBackground
     UISearchBar.appearance().tintColor = UIColor.systemOrange
     searchBar.delegate = self
     tableView.tableHeaderView = searchBar
@@ -59,7 +57,7 @@ final class MovieViewController: UIViewController {
     tableView.rowHeight = 100
     view.backgroundColor = UIColor.systemBackground
     tableView.backgroundColor = .systemBackground
-    tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.Identifier.custom.rawValue)
+    MovieTableViewCell.Register.register(tableView: tableView)
     tableView.delegate = self
     tableView.dataSource = self
     indicator.color = .systemOrange
@@ -135,8 +133,9 @@ extension MovieViewController: UISearchBarDelegate {
     isFiltered = false
     tableView.reloadData()
   }
-  
+ 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    
     if !isFiltered {
       let position = scrollView.contentOffset.y
       if position > (tableView.contentSize.height - 50 - scrollView.frame.size.height) {
@@ -174,16 +173,3 @@ extension MovieViewController: MovieOutput {
   }
 }
 
-extension Array where Element: Hashable {
-    func removingDuplicates() -> [Element] {
-        var addedDict = [Element: Bool]()
-
-        return filter {
-            addedDict.updateValue(true, forKey: $0) == nil
-        }
-    }
-
-    mutating func removeDuplicates() {
-        self = self.removingDuplicates()
-    }
-}

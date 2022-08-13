@@ -19,6 +19,11 @@ class MovieTableViewCell: UITableViewCell {
     case custom = "movie"
   }
   
+  enum Register {
+    static func register(tableView: UITableView) {
+      tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.Identifier.custom.rawValue)
+    }
+  }
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)

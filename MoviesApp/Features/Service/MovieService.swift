@@ -78,11 +78,11 @@ class MovieService: IMovieService {
       if pagination {
         self.isPaginating = true
       }
-      guard let data = model.value else {
+       guard let data = model.value else {
         response(nil)
         return
       }
-      response(data.results)
+       response(data.results)
     }
   }
 }

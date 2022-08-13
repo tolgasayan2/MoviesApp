@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "skeletonview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/s2mr/SkeletonView.git",
+      "state" : {
+        "revision" : "d665d01469b4cb1b24db49689fe79317aa83024f",
+        "version" : "1.7.0"
+      }
+    },
+    {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SnapKit/SnapKit.git",
