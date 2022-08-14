@@ -49,7 +49,7 @@ final class MovieDetailsViewController: UIViewController {
     contentView.addSubview(trailerLabel)
     scrollView.addSubview(castButton)
     scrollView.addSubview(tableView)
-    scrollView.contentSize = CGSize(width: view.frame.width, height: 1300)
+    scrollView.contentSize = CGSize(width: view.frame.width, height: 1450)
     scrollView.addSubview(contentView)
     view.addSubview(scrollView)
     
@@ -106,11 +106,11 @@ final class MovieDetailsViewController: UIViewController {
       make.top.equalTo(trailerLabel.snp.bottom).offset(10)
       make.right.equalTo(trailerLabel.snp.right)
       make.left.equalTo(trailerLabel.snp.left).offset(-20)
-      make.bottom.equalTo(tableView.snp.top).offset(230)
+      make.bottom.equalTo(tableView.snp.top).offset(320)
     }
     
     castButton.snp.makeConstraints { make in
-      make.top.equalTo(tableView.snp.bottom).offset(25)
+      make.top.equalTo(tableView.snp.bottom).offset(10)
       make.right.equalTo(castButton.snp.left).offset(140)
       make.centerX.equalTo(self.view)
       make.bottom.equalTo(castButton.snp.top).offset(50)
@@ -134,7 +134,12 @@ final class MovieDetailsViewController: UIViewController {
     posterImageView.contentMode = .scaleAspectFill
     posterImageView.sizeToFit()
     ratingLabel.sizeToFit()
-    ratingLabel.text = "⭐️ \(String(movie.voteAverage))"
+    if let movieAvarage = movie.voteAverage {
+      ratingLabel.text = "⭐️ \(String(movieAvarage))"
+    } else {
+      ratingLabel.isHidden = true
+    }
+    
     ratingLabel.textColor = .systemOrange
     ratingLabel.textAlignment = .center
     ratingLabel.shadowColor = .black
@@ -189,7 +194,8 @@ final class MovieDetailsViewController: UIViewController {
 extension MovieDetailsViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return results.count
+    return results.count > 7 ? results.index(before: 7) : results.count
+   
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

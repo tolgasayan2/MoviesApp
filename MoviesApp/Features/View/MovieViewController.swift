@@ -111,7 +111,7 @@ extension MovieViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     isFiltered = true
     searchResults =  searchText.isEmpty ? results : results.filter { (movie) -> Bool in
-      return movie.title.range(of: searchText , options: .caseInsensitive) != nil
+      return movie.title?.range(of: searchText , options: .caseInsensitive) != nil
     }
     tableView.reloadData()
   }

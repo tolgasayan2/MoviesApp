@@ -19,6 +19,8 @@ enum MovieServiceEndPoint: String{
   case BIG_POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500"
   case PAGE = "page="
   case AND = "&"
+  case SEARCH = "https://api.themoviedb.org/3/search/movie?"
+  case QUERY = "query="
   
   static func Path() -> String {
     return "\(BASE_URL.rawValue)\(PATH.rawValue)\(API_KEY.rawValue)"
@@ -32,12 +34,17 @@ enum MovieServiceEndPoint: String{
   static func popularPath(page: Int) -> String {
     return "\(BASE_URL.rawValue)\(PATH.rawValue)\(PAGE.rawValue)\(String(page))\(AND.rawValue)\(API_KEY.rawValue)"
   }
+  
+  static func searchPath(query: String) -> String {
+    return "\(SEARCH.rawValue)\(API_KEY.rawValue)\(AND.rawValue)\(QUERY.rawValue)\(query)"
+  }
 }
 
 protocol IMovieService {
   func fetchPopularMovies(page: Int,pagination: Bool,response: @escaping ([Result]?) -> Void)
   func fetchVideos(pagination: Bool,response: @escaping ([VideoResult]?) -> Void)
   func fetchCast(pagination: Bool,response: @escaping ([CastResult]?) -> Void)
+  func fetchSearch(query: String,pagination: Bool,response: @escaping ([Result]?) -> Void)
   var id: Int { get set }
   var isPaginating: Bool { get }
 }
@@ -83,6 +90,17 @@ class MovieService: IMovieService {
         return
       }
        response(data.results)
+    }
+  }
+  
+  func fetchSearch(query: String,pagination: Bool,response: @escaping ([Result]?) -> Void) {
+    guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+    AF.request(MovieServiceEndPoint.searchPath(query: query)).responseDecodable(of: User.self) { (model) in
+      if pagination {
+        self.isPaginating = true
+      }
+      guard let data = model.value else { return }
+      response(data.results)
     }
   }
 }

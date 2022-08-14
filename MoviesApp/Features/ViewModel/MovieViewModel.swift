@@ -12,6 +12,7 @@ protocol IMovieViewModel {
   func fetchPopularItems(page: Int)
   func fetchVideoItems(id: Int)
   func fetchCastItems(id: Int)
+  func fetchSearchItems(query: String)
   func goToYoutube(key: String?)
   func changeLoading()
   func delegate(output: MovieOutput)
@@ -70,6 +71,16 @@ class MovieViewModel: IMovieViewModel {
       self?.castOutput?.saveCast(values: self?.casts ?? [])
     }
       
+  }
+  
+  func fetchSearchItems(query: String) {
+    changeLoading()
+    movieService.fetchSearch(query: query, pagination: true) { [weak self] response in
+      self?.changeLoading()
+      self?.movies = response ?? []
+      self?.movieOutput?.saveDatas(values: self?.movies ?? [])
+    }
+    
   }
   
   func goToYoutube(key: String?) {

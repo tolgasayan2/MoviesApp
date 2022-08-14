@@ -27,7 +27,6 @@ class SearchViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     configure()
-    viewModel.fetchPopularItems(page: 2)
     viewModel.delegate(output: self)
     
   }
@@ -49,7 +48,6 @@ class SearchViewController: UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
     indicator.color = .systemOrange
-    indicator.startAnimating()
     searchBar.searchResultsUpdater = self
     navigationItem.searchController = searchBar
     navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemOrange]
@@ -71,6 +69,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     guard let cell: MovieTableViewCell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.Identifier.custom.rawValue, for: indexPath) as? MovieTableViewCell else {
       return UITableViewCell()
     }
+    cell.selectionStyle = .none
+    cell.accessoryType = .disclosureIndicator
     cell.saveModel(model: results[indexPath.row])
     return cell
   }
@@ -91,8 +91,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 extension SearchViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     guard let query = searchController.searchBar.text else { return }
+    viewModel.movieService.fetchSearch(query: query.trimmingCharacters(in: .whitespaces), pagination: true) { [weak self] response in
+      DispatchQueue.main.async {
+        self?.changeLoading(isLoad: false)
+        self?.results = response ?? []
+        self?.tableView.reloadData()
+      }
+    }
   }
-  
   
 }
 
